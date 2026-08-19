@@ -1,4 +1,35 @@
 /* Shared ASAP interface — common to home, archives, pages and single templates. */
+
+/* One horizontal geometry for every template. The header is the reference. */
+:root {
+  --asap-shell-max: 1600px;
+}
+
+.site-header.shell,
+.site-main.shell,
+.page-shell.shell,
+.archive-head.shell,
+.calendar-page.shell,
+.radio-page.shell,
+.site-footer.shell,
+main > .shell,
+section.shell {
+  width: min(100%, var(--asap-shell-max));
+  max-width: var(--asap-shell-max);
+  margin-inline: auto;
+  padding-inline: var(--asap-pad);
+}
+
+/* Never add a second horizontal inset inside page templates. */
+.page-head,
+.page-body,
+.about-team,
+.calendar-page__events,
+.radio-page__list {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .site-header {
   grid-template-columns: auto auto 1fr;
   column-gap: clamp(18px, 2vw, 34px);
@@ -35,7 +66,7 @@
 }
 
 .menu-link--pill,
-.radio-badge {
+.menu-list .radio-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -62,7 +93,7 @@
 }
 
 /* Radio is part of the header row, but reads as a separate negative badge. */
-.radio-badge {
+.menu-list .radio-badge {
   position: static;
   margin-left: clamp(8px, 1.2vw, 20px);
   background: var(--asap-fg);
@@ -72,9 +103,11 @@
   transition: transform .2s ease, opacity .2s ease;
 }
 
-.radio-badge:hover {
+.menu-list .radio-badge:hover {
   transform: rotate(-2deg);
   opacity: .82;
+  background: var(--asap-fg);
+  color: var(--asap-bg);
 }
 
 /* Calendar stays in the standard ASAP visual language. */
@@ -189,8 +222,8 @@ body.single-radio .menu-link--pill {
   border-color: #111;
 }
 
-body.post-type-archive-radio .radio-badge,
-body.single-radio .radio-badge {
+body.post-type-archive-radio .menu-list .radio-badge,
+body.single-radio .menu-list .radio-badge {
   background: #111;
   color: #f1efe7;
   border-color: #111;
@@ -262,7 +295,7 @@ body.single-radio .radio-badge {
     flex-wrap: wrap;
   }
 
-  .radio-badge { margin-left: 8px; }
+  .menu-list .radio-badge { margin-left: 8px; }
 
   .page-head,
   .page-body { grid-template-columns: 1fr; }
