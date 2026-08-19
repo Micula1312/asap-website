@@ -4,6 +4,7 @@
 $home_video_id = (int) get_theme_mod('asap_home_video', 0);
 $home_video_url = $home_video_id ? wp_get_attachment_url($home_video_id) : '';
 $random_s_word = function_exists('asap_core_random_s_word') ? asap_core_random_s_word() : 'Soft';
+$s_words = function_exists('asap_core_get_s_words') ? asap_core_get_s_words(18) : ['Soft', 'Strange', 'Sensitive', 'Slippery', 'Subversive', 'Slow', 'Shared'];
 ?>
 
 <main class="home-main">
@@ -57,20 +58,33 @@ $random_s_word = function_exists('asap_core_random_s_word') ? asap_core_random_s
     </section>
 
     <section class="home-panel home-sword shell" id="as-s-as-possible">
-        <div class="home-sword__phrase" aria-live="polite">
-            As <span class="home-sword__word"><?php echo esc_html($random_s_word); ?></span> As Possible
+        <div class="home-sword__left">
+            <div class="home-sword__phrase" aria-live="polite">
+                As <span class="home-sword__word"><?php echo esc_html($random_s_word); ?></span><br>As Possible
+            </div>
+
+            <form class="home-sword__form" id="asap-s-word-form" data-endpoint="<?php echo esc_url(rest_url('asap/v1/s-word')); ?>">
+                <label for="asap-s-word">your S?</label>
+                <div class="home-sword__inputrow">
+                    <span>As</span>
+                    <input id="asap-s-word" name="word" type="text" maxlength="40" autocomplete="off" placeholder="Soft" required>
+                    <span>As Possible</span>
+                    <button type="submit">send ↗</button>
+                </div>
+                <p class="home-sword__feedback" aria-live="polite"></p>
+            </form>
         </div>
 
-        <form class="home-sword__form" id="asap-s-word-form" data-endpoint="<?php echo esc_url(rest_url('asap/v1/s-word')); ?>">
-            <label for="asap-s-word">your S?</label>
-            <div class="home-sword__inputrow">
-                <span>As</span>
-                <input id="asap-s-word" name="word" type="text" maxlength="40" autocomplete="off" placeholder="Soft" required>
-                <span>As Possible</span>
-                <button type="submit">send ↗</button>
+        <aside class="home-sword__visualizer" aria-label="Collected S words">
+            <div class="home-sword__visualizer-title">S words</div>
+            <div class="home-sword__list" id="asap-s-word-list">
+                <?php foreach ($s_words as $index => $word) : ?>
+                    <div class="home-sword__list-item" style="--i: <?php echo esc_attr((string) $index); ?>">
+                        <?php echo esc_html($word); ?>
+                    </div>
+                <?php endforeach; ?>
             </div>
-            <p class="home-sword__feedback" aria-live="polite"></p>
-        </form>
+        </aside>
     </section>
 </main>
 
