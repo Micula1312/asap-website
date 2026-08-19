@@ -13,16 +13,20 @@
 <header class="site-header shell">
     <a class="site-brand" href="<?php echo esc_url(home_url('/')); ?>" aria-label="ASAP home">ASAP</a>
 
-    <nav class="site-nav" aria-label="Primary">
-        <div class="menu-list">
-            <a class="menu-link" href="<?php echo esc_url(is_front_page() ? '#about' : home_url('/#about')); ?>">About</a>
-            <a class="menu-link" href="<?php echo esc_url(get_post_type_archive_link('work')); ?>">Works</a>
-            <a class="menu-link" href="<?php echo esc_url(home_url('/ex-casa-del-custode')); ?>">Ex Casa del Custode</a>
-            <a class="menu-link menu-link--radio" href="<?php echo esc_url(home_url('/radio')); ?>">Radio</a>
+    <nav class="site-nav site-nav--primary" aria-label="Explore ASAP">
+        <div class="menu-list menu-list--primary">
+            <a class="menu-link menu-link--plain" href="<?php echo esc_url(is_front_page() ? '#about' : home_url('/#about')); ?>">about</a>
+            <a class="menu-link menu-link--plain" href="<?php echo esc_url(is_front_page() ? '#works' : home_url('/#works')); ?>">works</a>
         </div>
     </nav>
 
-    <button class="pill calendar-trigger" type="button" aria-haspopup="dialog" aria-controls="calendar-overlay" aria-expanded="false">Calendar</button>
+    <nav class="site-nav site-nav--utility" aria-label="ASAP spaces and programme">
+        <div class="menu-list menu-list--utility">
+            <a class="menu-link menu-link--pill" href="<?php echo esc_url(home_url('/ex-casa-del-custode')); ?>">Ex Casa del Custode</a>
+            <button class="menu-link menu-link--pill calendar-trigger" type="button" aria-haspopup="dialog" aria-controls="calendar-overlay" aria-expanded="false">Calendar</button>
+            <a class="menu-link menu-link--pill menu-link--radio" href="<?php echo esc_url(home_url('/radio')); ?>">Radio</a>
+        </div>
+    </nav>
 </header>
 
 <div class="calendar-overlay" id="calendar-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="ASAP calendar">
