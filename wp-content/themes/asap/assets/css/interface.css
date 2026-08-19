@@ -6,11 +6,13 @@ html {
   -ms-overflow-style: none;
 }
 html::-webkit-scrollbar,
-body::-webkit-scrollbar {
+body::-webkit-scrollbar,
+.home .home-main::-webkit-scrollbar {
   display: none;
   width: 0;
   height: 0;
 }
+.home .home-main { scrollbar-width: none; -ms-overflow-style: none; }
 
 .site-header.shell,
 .site-main.shell,
@@ -27,14 +29,13 @@ section.shell {
   padding-inline: var(--asap-pad);
 }
 
-/* Shell only controls the horizontal canvas: no generic vertical padding. */
+/* Generic templates own their vertical rhythm. IMPORTANT: do not reset section.shell,
+   because homepage fullscreen panels use .shell + their own vertical padding. */
 .site-main.shell,
 .page-shell.shell,
 .archive-head.shell,
 .calendar-page.shell,
-.radio-page.shell,
-main > .shell,
-section.shell {
+.radio-page.shell {
   padding-top: 0;
   padding-bottom: 0;
 }
