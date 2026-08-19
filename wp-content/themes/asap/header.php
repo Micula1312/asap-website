@@ -24,8 +24,7 @@
         <div class="menu-list menu-list--utility">
             <a class="menu-link menu-link--pill" href="<?php echo esc_url(home_url('/ex-casa-del-custode')); ?>">Ex Casa del Custode</a>
             <a class="menu-link menu-link--pill" href="<?php echo esc_url(home_url('/calendar')); ?>">Calendar</a>
+            <a class="radio-badge" href="<?php echo esc_url(get_post_type_archive_link('radio') ?: home_url('/radio')); ?>" aria-label="ASAP Radio">Radio</a>
         </div>
     </nav>
-
-    <a class="radio-badge" href="<?php echo esc_url(get_post_type_archive_link('radio') ?: home_url('/radio')); ?>" aria-label="ASAP Radio">Radio</a>
 </header>
