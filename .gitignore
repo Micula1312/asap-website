@@ -1,0 +1,31 @@
+# WordPress core
+/wp-admin/
+/wp-includes/
+/wp-*.php
+/index.php
+/license.txt
+/readme.html
+/xmlrpc.php
+
+# Local config
+/wp-config.php
+/.htaccess
+
+# Uploads / cache
+/wp-content/uploads/
+/wp-content/cache/
+/wp-content/upgrade/
+
+# Plugins
+/wp-content/plugins/
+
+# Ignore all themes
+/wp-content/themes/*
+
+# Except ASAP theme
+!/wp-content/themes/asap/
+
+# System
+.DS_Store
+Thumbs.db
+.vscode/
