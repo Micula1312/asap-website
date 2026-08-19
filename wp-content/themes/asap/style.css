@@ -1,0 +1,42 @@
+/*
+Theme Name: ASAP
+Theme URI: https://github.com/Micula1312/asap-website
+Author: ASAP / Micol Gelsi
+Description: Custom editorial WordPress theme for ASAP APS.
+Version: 0.1.0
+Text Domain: asap
+*/
+
+:root {
+  --asap-bg: #000;
+  --asap-fg: #fff;
+  --asap-muted: rgba(255, 255, 255, .68);
+  --asap-line: rgba(255, 255, 255, .45);
+  --asap-c1: #fbf8cc;
+  --asap-c2: #fde4cf;
+  --asap-c3: #ffcfd2;
+  --asap-c4: #f1c0e8;
+  --asap-c5: #cfbaf0;
+  --asap-c6: #a3c4f3;
+  --asap-c7: #90dbf4;
+  --asap-c8: #8eecf5;
+  --asap-c9: #98f5e1;
+  --asap-c10: #b9fbc0;
+  --asap-pad: clamp(18px, 2.5vw, 38px);
+  --asap-radius: 999px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--asap-bg);
+  color: var(--asap-fg);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+a { color: inherit; }
+img, video { display: block; max-width: 100%; }
+button, input, textarea, select { font: inherit; }
