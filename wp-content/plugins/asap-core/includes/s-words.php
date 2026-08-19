@@ -48,14 +48,49 @@ function asap_core_random_s_word() {
     return $word ? $word : $fallback[array_rand($fallback)];
 }
 
+function asap_core_get_s_words($limit = 18) {
+    global $wpdb;
+    $table = asap_core_s_words_table();
+    $limit = max(1, min(50, absint($limit)));
+
+    $words = $wpdb->get_col(
+        $wpdb->prepare(
+            "SELECT word FROM {$table} WHERE approved = 1 ORDER BY created_at DESC, id DESC LIMIT %d",
+            $limit
+        )
+    );
+
+    if (!$words) {
+        return ['Soft', 'Strange', 'Sensitive', 'Slippery', 'Subversive', 'Slow', 'Shared'];
+    }
+
+    return array_values(array_filter(array_map('sanitize_text_field', $words)));
+}
+
 function asap_core_register_s_word_route() {
     register_rest_route('asap/v1', '/s-word', [
-        'methods' => 'POST',
-        'callback' => 'asap_core_submit_s_word',
-        'permission_callback' => '__return_true',
+        [
+            'methods' => 'POST',
+            'callback' => 'asap_core_submit_s_word',
+            'permission_callback' => '__return_true',
+        ],
+        [
+            'methods' => 'GET',
+            'callback' => 'asap_core_list_s_words',
+            'permission_callback' => '__return_true',
+        ],
     ]);
 }
 add_action('rest_api_init', 'asap_core_register_s_word_route');
+
+function asap_core_list_s_words(WP_REST_Request $request) {
+    $limit = $request->get_param('limit');
+    $limit = $limit ? absint($limit) : 18;
+
+    return rest_ensure_response([
+        'words' => asap_core_get_s_words($limit),
+    ]);
+}
 
 function asap_core_submit_s_word(WP_REST_Request $request) {
     global $wpdb;
