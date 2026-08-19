@@ -3,6 +3,7 @@
 <?php
 $home_video_id = (int) get_theme_mod('asap_home_video', 0);
 $home_video_url = $home_video_id ? wp_get_attachment_url($home_video_id) : '';
+$random_s_word = function_exists('asap_core_random_s_word') ? asap_core_random_s_word() : 'Soft';
 ?>
 
 <main class="home-main">
@@ -18,34 +19,58 @@ $home_video_url = $home_video_id ? wp_get_attachment_url($home_video_id) : '';
                 <span class="glow glow--3"></span>
             </div>
         <?php endif; ?>
-
-        <button class="home-video__scroll" type="button" data-scroll-target="#about" aria-label="Go to About">
-            <span>About</span><span aria-hidden="true">↓</span>
-        </button>
     </section>
 
-    <section class="home-panel home-story home-story--about shell" id="about">
-        <div class="home-story__label">About</div>
+    <section class="home-panel home-story shell" id="about">
+        <div class="home-story__label">about</div>
         <div class="home-story__copy">
             <p>ASAP è un collettivo artistico e uno spazio di produzione condivisa.</p>
-            <p>Lavoriamo tra performance, installazione, ricerca, pratiche partecipative e cultura indipendente.</p>
+            <a class="home-story__link" href="<?php echo esc_url(home_url('/about')); ?>">more about us ↗</a>
         </div>
     </section>
 
-    <section class="home-panel home-story home-story--practice shell" id="practice">
-        <div class="home-story__label">Practice</div>
+    <section class="home-panel home-story shell" id="works">
+        <div class="home-story__label">works</div>
         <div class="home-story__copy">
-            <p>Costruiamo progetti a partire dai corpi, dalle relazioni e dai luoghi.</p>
-            <p>Ogni formato può cambiare: performance, workshop, eventi, immagini, suono, festa, ricerca.</p>
+            <p>Costruiamo performance, installazioni, workshop, eventi e situazioni collettive.</p>
+            <a class="home-story__link" href="<?php echo esc_url(get_post_type_archive_link('work')); ?>">explore the archive ↗</a>
         </div>
     </section>
 
-    <section class="home-panel home-story home-story--space shell" id="space">
-        <div class="home-story__label">ASAP</div>
+    <section class="home-panel home-story shell" id="casa">
+        <div class="home-story__label">space</div>
         <div class="home-story__copy">
-            <p>ASAP è anche una rete: persone, collaborazioni, produzioni e spazi che si attivano insieme.</p>
-            <p>Il sito raccoglie ciò che facciamo e ciò che sta per succedere.</p>
+            <p>Da un anno ASAP vive e cura lo spazio di Ex Casa del Custode.</p>
+            <a class="home-story__link" href="<?php echo esc_url(home_url('/ex-casa-del-custode')); ?>">enter the space ↗</a>
         </div>
+    </section>
+
+    <section class="home-panel home-story shell" id="programme">
+        <div class="home-story__label">programme</div>
+        <div class="home-story__copy">
+            <p>Segui quello che sta succedendo.</p>
+            <div class="home-story__actions">
+                <a class="home-story__link" href="<?php echo esc_url(home_url('/radio')); ?>">listen to the radio ↗</a>
+                <button class="home-story__link home-story__link--button calendar-trigger-inline" type="button">see the calendar ↗</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-panel home-sword shell" id="as-s-as-possible">
+        <div class="home-sword__phrase" aria-live="polite">
+            As <span class="home-sword__word"><?php echo esc_html($random_s_word); ?></span> As Possible
+        </div>
+
+        <form class="home-sword__form" id="asap-s-word-form" data-endpoint="<?php echo esc_url(rest_url('asap/v1/s-word')); ?>">
+            <label for="asap-s-word">your S?</label>
+            <div class="home-sword__inputrow">
+                <span>As</span>
+                <input id="asap-s-word" name="word" type="text" maxlength="40" autocomplete="off" placeholder="Soft" required>
+                <span>As Possible</span>
+                <button type="submit">send ↗</button>
+            </div>
+            <p class="home-sword__feedback" aria-live="polite"></p>
+        </form>
     </section>
 </main>
 
