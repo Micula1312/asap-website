@@ -16,8 +16,11 @@
 /wp-content/cache/
 /wp-content/upgrade/
 
-# Plugins
-/wp-content/plugins/
+# Ignore third-party plugins
+/wp-content/plugins/*
+
+# Track ASAP custom plugin
+!/wp-content/plugins/asap-core/
 
 # Ignore all themes
 /wp-content/themes/*
