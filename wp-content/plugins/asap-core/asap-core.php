@@ -255,7 +255,7 @@ function asap_core_render_work_details($post) {
                 <button type="button" class="button" id="asap-gallery-select"><?php esc_html_e('Select / edit gallery', 'asap-core'); ?></button>
                 <button type="button" class="button-link-delete" id="asap-gallery-clear" style="margin-left:10px"><?php esc_html_e('Clear gallery', 'asap-core'); ?></button>
             </div>
-            <p class="asap-help"><?php esc_html_e('The project description uses the main WordPress editor above. Project type is selected from the Work types panel.', 'asap-core'); ?></p>
+            <p class="asap-help"><?php esc_html_e('Project type is selected from the Work types panel. Rich description, production and credits are available in the editorial fields box.', 'asap-core'); ?></p>
         </div>
     </div>
     <?php
@@ -330,3 +330,5 @@ function asap_core_deactivate() {
     flush_rewrite_rules();
 }
 register_deactivation_hook(__FILE__, 'asap_core_deactivate');
+
+require_once __DIR__ . '/includes/work-editorial-fields.php';
