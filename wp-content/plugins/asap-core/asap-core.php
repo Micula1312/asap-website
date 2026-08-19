@@ -153,6 +153,8 @@ function asap_core_register_meta() {
         'asap_event_end' => 'sanitize_text_field',
         'asap_event_location' => 'sanitize_text_field',
         'asap_event_url' => 'esc_url_raw',
+        'asap_event_label' => 'sanitize_text_field',
+        'asap_event_booking' => 'esc_url_raw',
     ];
 
     foreach ($event_fields as $key => $sanitize) {
@@ -332,4 +334,5 @@ function asap_core_deactivate() {
 register_deactivation_hook(__FILE__, 'asap_core_deactivate');
 
 require_once __DIR__ . '/includes/work-editorial-fields.php';
+require_once __DIR__ . '/includes/event-fields.php';
 require_once __DIR__ . '/includes/s-words.php';
