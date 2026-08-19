@@ -43,12 +43,12 @@
   });
 
   const hero = document.querySelector('.home-video');
-  const nextSection = document.querySelector('#home-head');
+  const aboutSection = document.querySelector('#about');
 
-  if (hero && nextSection) {
+  if (hero && aboutSection) {
     hero.addEventListener('pointerup', (event) => {
       if (event.target.closest('a, button, input, textarea, select, video[controls]')) return;
-      nextSection.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+      aboutSection.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
     });
   }
 
@@ -106,7 +106,7 @@
   });
 
   animateIn('.site-brand', { delay: 260, x: -28, y: 0, duration: 850 });
-  animateIn('.site-nav a, .site-nav .pill', { delay: 350, stagger: 85, y: -16, duration: 780, scale: 0.94 });
+  animateIn('.site-nav a', { delay: 350, stagger: 85, y: -16, duration: 780, scale: 0.94 });
   animateIn('.calendar-trigger', { delay: 720, x: 28, y: 0, duration: 820 });
   animateIn('.home-video__scroll', { delay: 920, y: 18, duration: 850, scale: 0.9 });
 
@@ -123,17 +123,14 @@
     });
   }
 
-  const revealGroups = document.querySelectorAll(
-    '.home-head__statement > *, .home-head__intro > *, .section-heading > *, .work-card, .news-row'
-  );
-
+  const revealGroups = document.querySelectorAll('.home-story__label, .home-story__copy p');
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
-      animateIn([entry.target], { duration: 950, y: 32, blur: 10 });
+      animateIn([entry.target], { duration: 950, y: 34, blur: 10 });
       obs.unobserve(entry.target);
     });
-  }, { threshold: 0.14, rootMargin: '0px 0px -5% 0px' });
+  }, { threshold: 0.2, root: document.querySelector('.home-main'), rootMargin: '0px 0px -8% 0px' });
 
   revealGroups.forEach((element) => observer.observe(element));
 })();
