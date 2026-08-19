@@ -332,3 +332,4 @@ function asap_core_deactivate() {
 register_deactivation_hook(__FILE__, 'asap_core_deactivate');
 
 require_once __DIR__ . '/includes/work-editorial-fields.php';
+require_once __DIR__ . '/includes/s-words.php';
