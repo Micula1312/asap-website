@@ -41,6 +41,13 @@ function asap_enqueue_assets() {
         wp_get_theme()->get('Version')
     );
 
+    wp_enqueue_style(
+        'asap-home',
+        get_template_directory_uri() . '/assets/css/home.css',
+        ['asap-main'],
+        wp_get_theme()->get('Version')
+    );
+
     wp_enqueue_script(
         'asap-main',
         get_template_directory_uri() . '/assets/js/main.js',
@@ -50,45 +57,6 @@ function asap_enqueue_assets() {
     );
 }
 add_action('wp_enqueue_scripts', 'asap_enqueue_assets');
-
-function asap_register_content_types() {
-    $types = [
-        'work' => ['Works', 'Work'],
-        'event' => ['Events', 'Event'],
-        'member' => ['Members', 'Member'],
-        'news' => ['News', 'News'],
-        'radio' => ['Radio', 'Radio'],
-    ];
-
-    foreach ($types as $slug => $labels) {
-        register_post_type($slug, [
-            'labels' => [
-                'name' => __($labels[0], 'asap'),
-                'singular_name' => __($labels[1], 'asap'),
-                'add_new_item' => sprintf(__('Add %s', 'asap'), $labels[1]),
-                'edit_item' => sprintf(__('Edit %s', 'asap'), $labels[1]),
-            ],
-            'public' => true,
-            'show_in_rest' => true,
-            'menu_position' => 20,
-            'supports' => ['title', 'editor', 'thumbnail', 'excerpt', 'revisions'],
-            'has_archive' => in_array($slug, ['work', 'event', 'news', 'radio'], true),
-            'rewrite' => ['slug' => $slug === 'work' ? 'works' : $slug],
-        ]);
-    }
-
-    register_taxonomy('work_type', ['work'], [
-        'labels' => [
-            'name' => __('Work types', 'asap'),
-            'singular_name' => __('Work type', 'asap'),
-        ],
-        'public' => true,
-        'show_in_rest' => true,
-        'hierarchical' => false,
-        'rewrite' => ['slug' => 'work-type'],
-    ]);
-}
-add_action('init', 'asap_register_content_types');
 
 /**
  * Homepage media controls.
