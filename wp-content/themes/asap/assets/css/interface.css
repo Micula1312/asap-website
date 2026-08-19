@@ -1,10 +1,6 @@
 /* Shared ASAP interface — common to home, archives, pages and single templates. */
 
-/* One horizontal geometry for every template. The header is the reference. */
-:root {
-  --asap-shell-max: 1600px;
-}
-
+/* Full-width canvas for every template. Header padding is the reference edge. */
 .site-header.shell,
 .site-main.shell,
 .page-shell.shell,
@@ -14,9 +10,9 @@
 .site-footer.shell,
 main > .shell,
 section.shell {
-  width: min(100%, var(--asap-shell-max));
-  max-width: var(--asap-shell-max);
-  margin-inline: auto;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
   padding-inline: var(--asap-pad);
 }
 
@@ -295,7 +291,7 @@ body.single-radio .menu-list .radio-badge {
     flex-wrap: wrap;
   }
 
-  .menu-list .radio-badge { margin-left: 8px; }
+  .radio-badge { margin-left: 8px; }
 
   .page-head,
   .page-body { grid-template-columns: 1fr; }
