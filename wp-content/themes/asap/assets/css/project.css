@@ -1,0 +1,120 @@
+/* Single Work — based on the ASAP portfolio spread. */
+.single-work.shell {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+}
+
+.project-sheet {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #000;
+  color: #fff;
+}
+
+.project-sheet__left {
+  position: relative;
+  min-height: 100svh;
+  padding: clamp(28px, 3vw, 52px);
+  display: flex;
+  flex-direction: column;
+}
+
+.project-sheet__brand {
+  font-weight: 700;
+  font-size: clamp(1rem, 1.4vw, 1.5rem);
+}
+
+.project-sheet__copy {
+  margin-top: clamp(70px, 10vh, 140px);
+  max-width: 48rem;
+}
+
+.project-sheet__title {
+  margin: 0;
+  font-size: clamp(4rem, 7vw, 8.5rem);
+  line-height: .86;
+  letter-spacing: -.065em;
+}
+
+.project-sheet__subtitle {
+  margin: 1rem 0 0;
+  max-width: 42rem;
+  font-size: 1rem;
+  color: var(--asap-muted);
+}
+
+.project-sheet__meta {
+  margin-top: clamp(28px, 4vh, 48px);
+  font-size: .95rem;
+  line-height: 1.35;
+}
+
+.project-sheet__meta a {
+  display: inline-block;
+  margin-top: .2rem;
+  color: #66ff66;
+}
+
+.project-sheet__content {
+  margin-top: clamp(28px, 4vh, 50px);
+  max-width: 44rem;
+  font-size: clamp(.95rem, 1.08vw, 1.15rem);
+  line-height: 1.28;
+}
+
+.project-sheet__content p {
+  margin: 0 0 1.15em;
+}
+
+.project-sheet__credits {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,.28);
+  color: var(--asap-muted);
+  font-size: .82rem;
+  line-height: 1.35;
+}
+
+.project-sheet__right {
+  min-height: 100svh;
+  position: relative;
+  overflow: hidden;
+  background: #111;
+}
+
+.project-sheet__hero {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+}
+
+.project-sheet__hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-sheet__hero--empty {
+  background: linear-gradient(145deg, rgba(152,245,225,.55), rgba(163,196,243,.18) 42%, rgba(241,192,232,.42));
+}
+
+@media (max-width: 900px) {
+  .project-sheet {
+    grid-template-columns: 1fr;
+  }
+
+  .project-sheet__left,
+  .project-sheet__right {
+    min-height: auto;
+  }
+
+  .project-sheet__right {
+    aspect-ratio: 4 / 5;
+  }
+
+  .project-sheet__copy {
+    margin-top: 72px;
+  }
+}
