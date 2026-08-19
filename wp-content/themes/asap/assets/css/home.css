@@ -1,18 +1,29 @@
-/* Homepage is intentionally a single fullscreen visual. */
+/* Homepage: fullscreen panels with section-by-section scroll. */
 .home {
   overflow: hidden;
 }
 
-.home .home-main,
-.home .home-video {
+.home .home-main {
   width: 100vw;
   height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+.home .home-panel {
+  width: 100vw;
   min-height: 100dvh;
-  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
 }
 
 .home .home-video {
-  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+  background: #000;
 }
 
 .home .home-video__media,
@@ -27,7 +38,61 @@
   object-fit: cover;
 }
 
-/* Footer becomes part of the fullscreen composition, like the portfolio cover. */
+.home .home-video__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(70px, 7vh, 110px);
+  z-index: 20;
+  transform: translateX(-50%);
+}
+
+.home-story {
+  display: grid;
+  grid-template-columns: minmax(120px, .28fr) minmax(0, 1fr);
+  gap: clamp(28px, 6vw, 100px);
+  align-items: center;
+  padding-top: clamp(120px, 16vh, 180px);
+  padding-bottom: clamp(110px, 12vh, 160px);
+}
+
+.home-story__label {
+  align-self: start;
+  padding-top: .25em;
+  font-size: clamp(.9rem, 1.2vw, 1.2rem);
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  color: var(--asap-muted);
+}
+
+.home-story__copy {
+  max-width: 15ch;
+  font-size: clamp(3rem, 6.6vw, 8rem);
+  line-height: .91;
+  letter-spacing: -.065em;
+  font-weight: 700;
+}
+
+.home-story__copy p {
+  margin: 0;
+}
+
+.home-story__copy p + p {
+  margin-top: .75em;
+}
+
+.home-story--about {
+  background: #000;
+}
+
+.home-story--practice {
+  background: #111;
+}
+
+.home-story--space {
+  background: #000;
+}
+
+/* Footer remains part of the fixed interface. */
 .home .site-footer {
   position: fixed;
   left: 0;
@@ -59,8 +124,91 @@
   text-align: right;
 }
 
+/* Homepage header: larger links, all grouped to the right. */
+.home .site-header {
+  grid-template-columns: auto 1fr auto;
+}
+
+.home .site-nav {
+  justify-self: end;
+}
+
+.home .menu-list {
+  justify-content: flex-end;
+  gap: clamp(10px, 1.1vw, 18px);
+}
+
+.home .menu-link {
+  border: 0;
+  padding: .2rem 0;
+  min-height: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: clamp(1rem, 1.35vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.home .menu-link:hover {
+  background: transparent;
+  color: inherit;
+  opacity: .6;
+}
+
+.home .menu-link--radio {
+  padding: .36rem .9rem .28rem;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+}
+
+.home .menu-link--radio:hover {
+  background: #fff;
+  color: #000;
+  opacity: 1;
+}
+
+.home .calendar-trigger {
+  margin-left: clamp(6px, .8vw, 14px);
+  font-size: clamp(.88rem, 1.05vw, 1.1rem);
+}
+
 .home.admin-bar .site-header {
   top: calc(7px + 32px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home .home-main { scroll-behavior: auto; }
+}
+
+@media (max-width: 900px) {
+  .home .site-header {
+    grid-template-columns: auto 1fr;
+  }
+
+  .home .site-nav {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+  }
+
+  .home .menu-list {
+    justify-content: flex-end;
+  }
+
+  .home-story {
+    grid-template-columns: 1fr;
+    align-content: center;
+  }
+
+  .home-story__label {
+    align-self: auto;
+  }
+
+  .home-story__copy {
+    max-width: 18ch;
+    font-size: clamp(2.6rem, 10vw, 5rem);
+  }
 }
 
 @media (max-width: 782px) {
@@ -80,5 +228,23 @@
 
   .home .site-footer > :nth-child(even) {
     text-align: right;
+  }
+}
+
+@media (max-width: 620px) {
+  .home .menu-list {
+    gap: 9px 12px;
+  }
+
+  .home .menu-link {
+    font-size: .86rem;
+  }
+
+  .home .menu-link--radio {
+    padding: .28rem .65rem .22rem;
+  }
+
+  .home .calendar-trigger {
+    font-size: .74rem;
   }
 }
