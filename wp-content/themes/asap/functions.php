@@ -26,47 +26,52 @@ function asap_theme_setup() {
 }
 add_action('after_setup_theme', 'asap_theme_setup');
 
+function asap_asset_version($relative_path) {
+    $path = get_template_directory() . $relative_path;
+    return file_exists($path) ? (string) filemtime($path) : wp_get_theme()->get('Version');
+}
+
 function asap_enqueue_assets() {
     wp_enqueue_style(
         'asap-style',
         get_stylesheet_uri(),
         [],
-        wp_get_theme()->get('Version')
+        asap_asset_version('/style.css')
     );
 
     wp_enqueue_style(
         'asap-main',
         get_template_directory_uri() . '/assets/css/main.css',
         ['asap-style'],
-        wp_get_theme()->get('Version')
+        asap_asset_version('/assets/css/main.css')
     );
 
     wp_enqueue_style(
         'asap-home',
         get_template_directory_uri() . '/assets/css/home.css',
         ['asap-main'],
-        wp_get_theme()->get('Version')
+        asap_asset_version('/assets/css/home.css')
     );
 
     wp_enqueue_style(
         'asap-project',
         get_template_directory_uri() . '/assets/css/project.css',
         ['asap-main'],
-        wp_get_theme()->get('Version')
+        asap_asset_version('/assets/css/project.css')
     );
 
     wp_enqueue_style(
         'asap-interface',
         get_template_directory_uri() . '/assets/css/interface.css',
         ['asap-main', 'asap-home'],
-        wp_get_theme()->get('Version')
+        asap_asset_version('/assets/css/interface.css')
     );
 
     wp_enqueue_script(
         'asap-main',
         get_template_directory_uri() . '/assets/js/main.js',
         [],
-        wp_get_theme()->get('Version'),
+        asap_asset_version('/assets/js/main.js'),
         true
     );
 }
