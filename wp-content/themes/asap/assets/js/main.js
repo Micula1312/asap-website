@@ -59,6 +59,29 @@
     const input = sWordForm.querySelector('input[name="word"]');
     const feedback = sWordForm.querySelector('.home-sword__feedback');
     const phraseWord = document.querySelector('.home-sword__word');
+    const wordList = document.querySelector('#asap-s-word-list');
+
+    const addWordToVisualizer = (word) => {
+      if (!wordList) return;
+
+      const item = document.createElement('div');
+      item.className = 'home-sword__list-item is-new';
+      item.style.setProperty('--i', '0');
+      item.textContent = word;
+      wordList.prepend(item);
+
+      Array.from(wordList.children).forEach((child, index) => {
+        child.style.setProperty('--i', String(index));
+      });
+
+      while (wordList.children.length > 18) {
+        wordList.lastElementChild?.remove();
+      }
+
+      if (!reducedMotion) {
+        window.setTimeout(() => item.classList.remove('is-new'), 850);
+      }
+    };
 
     sWordForm.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -81,6 +104,7 @@
 
         feedback.textContent = 'saved';
         if (phraseWord) phraseWord.textContent = data.word;
+        addWordToVisualizer(data.word);
         input.value = '';
       } catch (error) {
         feedback.textContent = error.message || 'non riesco a salvare la parola';
@@ -157,7 +181,7 @@
     });
   }
 
-  const revealGroups = document.querySelectorAll('.home-story__label, .home-story__copy > p, .home-story__link, .home-sword__phrase, .home-sword__form');
+  const revealGroups = document.querySelectorAll('.home-story__label, .home-story__copy > p, .home-story__link, .home-sword__phrase, .home-sword__form, .home-sword__visualizer');
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
