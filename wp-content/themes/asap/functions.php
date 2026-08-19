@@ -48,6 +48,13 @@ function asap_enqueue_assets() {
         wp_get_theme()->get('Version')
     );
 
+    wp_enqueue_style(
+        'asap-project',
+        get_template_directory_uri() . '/assets/css/project.css',
+        ['asap-main'],
+        wp_get_theme()->get('Version')
+    );
+
     wp_enqueue_script(
         'asap-main',
         get_template_directory_uri() . '/assets/js/main.js',
