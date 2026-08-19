@@ -51,8 +51,8 @@ $s_words = function_exists('asap_core_get_s_words') ? asap_core_get_s_words(18) 
         <div class="home-story__copy">
             <p>Segui quello che sta succedendo.</p>
             <div class="home-story__actions">
-                <a class="home-story__link" href="<?php echo esc_url(home_url('/radio')); ?>">listen to the radio ↗</a>
-                <button class="home-story__link home-story__link--button calendar-trigger-inline" type="button">see the calendar ↗</button>
+                <a class="home-story__link" href="<?php echo esc_url(get_post_type_archive_link('radio') ?: home_url('/radio')); ?>">listen to the radio ↗</a>
+                <a class="home-story__link" href="<?php echo esc_url(home_url('/calendar')); ?>">see the calendar ↗</a>
             </div>
         </div>
     </section>
