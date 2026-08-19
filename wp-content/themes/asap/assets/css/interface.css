@@ -1,0 +1,163 @@
+/* Global utility navigation: Casa + Calendar remain normal page links. Radio floats as a negative badge. */
+.radio-badge {
+  position: fixed;
+  top: calc(7px + 21px);
+  right: var(--asap-pad);
+  z-index: 9600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: .34rem 1rem .26rem;
+  border: 1.5px solid #fff;
+  border-radius: 999px;
+  background: #fff;
+  color: #000;
+  font-size: clamp(.72rem, .84vw, .9rem);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.08), 0 8px 28px rgba(0,0,0,.18);
+  transition: transform .2s ease, background .2s ease, color .2s ease;
+}
+
+.radio-badge:hover {
+  transform: translateY(-2px) rotate(-2deg);
+  background: #000;
+  color: #fff;
+}
+
+.site-nav--utility {
+  padding-right: clamp(74px, 7.5vw, 118px);
+}
+
+.admin-bar .radio-badge { top: calc(7px + 21px + 32px); }
+
+/* Calendar stays in the standard black ASAP language. */
+.calendar-page {
+  min-height: 100svh;
+  padding-bottom: clamp(70px, 10vw, 140px);
+}
+
+.calendar-page__head {
+  padding-top: clamp(130px, 17vh, 200px);
+}
+
+.calendar-page__events {
+  margin-top: clamp(30px, 5vw, 70px);
+}
+
+.calendar-page__row {
+  grid-template-columns: minmax(150px, .24fr) 1fr minmax(120px, .28fr) auto;
+}
+
+.calendar-page__location {
+  color: var(--asap-muted);
+  text-align: right;
+}
+
+/* The visual system changes on Radio, not on Calendar. */
+body.post-type-archive-radio,
+body.single-radio {
+  --asap-bg: #f1efe7;
+  --asap-fg: #111;
+  --asap-muted: rgba(17,17,17,.56);
+  --asap-line: rgba(17,17,17,.2);
+  background: var(--asap-bg);
+  color: var(--asap-fg);
+}
+
+body.post-type-archive-radio .site-header,
+body.single-radio .site-header {
+  background: rgba(241,239,231,.92);
+  color: #111;
+  backdrop-filter: blur(14px);
+}
+
+body.post-type-archive-radio .menu-link,
+body.single-radio .menu-link,
+body.post-type-archive-radio .site-brand,
+body.single-radio .site-brand {
+  color: #111;
+}
+
+body.post-type-archive-radio .menu-link--pill,
+body.single-radio .menu-link--pill {
+  border-color: #111;
+}
+
+body.post-type-archive-radio .radio-badge,
+body.single-radio .radio-badge {
+  background: #111;
+  color: #f1efe7;
+  border-color: #111;
+}
+
+.radio-page {
+  min-height: 100svh;
+  padding-bottom: clamp(70px, 10vw, 140px);
+}
+
+.radio-page__head {
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, .36fr);
+  gap: clamp(30px, 6vw, 100px);
+  align-items: end;
+}
+
+.radio-page__head .eyebrow {
+  grid-column: 1 / -1;
+}
+
+.radio-page__intro {
+  margin: 0 0 .35rem;
+  font-size: clamp(1.2rem, 2vw, 2.2rem);
+  line-height: 1.02;
+  letter-spacing: -.03em;
+}
+
+.radio-page__list {
+  margin-top: clamp(40px, 8vw, 120px);
+  border-bottom: 1px solid var(--asap-line);
+}
+
+.radio-row {
+  display: grid;
+  grid-template-columns: minmax(100px, .18fr) 1fr minmax(70px, .12fr) auto;
+  gap: clamp(14px, 3vw, 50px);
+  align-items: baseline;
+  padding: clamp(14px, 2vw, 24px) 0;
+  border-top: 1px solid var(--asap-line);
+  color: inherit;
+  text-decoration: none;
+}
+
+.radio-row__type,
+.radio-row__date {
+  color: var(--asap-muted);
+  text-transform: lowercase;
+}
+
+.radio-row__title {
+  font-size: clamp(1.5rem, 3.5vw, 4.5rem);
+  line-height: .92;
+  letter-spacing: -.05em;
+}
+
+@media (max-width: 900px) {
+  .site-nav--utility { padding-right: 0; }
+  .radio-badge {
+    top: auto;
+    right: var(--asap-pad);
+    bottom: clamp(18px, 4vw, 30px);
+  }
+  .admin-bar .radio-badge { top: auto; }
+  .calendar-page__row { grid-template-columns: 1fr auto; }
+  .calendar-page__row > :first-child,
+  .calendar-page__location { grid-column: 1 / -1; text-align: left; }
+  .radio-page__head { grid-template-columns: 1fr; }
+  .radio-row { grid-template-columns: 1fr auto; }
+  .radio-row__type,
+  .radio-row__date { grid-column: 1 / -1; }
+}
