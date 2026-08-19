@@ -76,5 +76,43 @@ function asap_register_content_types() {
             'rewrite' => ['slug' => $slug === 'work' ? 'works' : $slug],
         ]);
     }
+
+    register_taxonomy('work_type', ['work'], [
+        'labels' => [
+            'name' => __('Work types', 'asap'),
+            'singular_name' => __('Work type', 'asap'),
+        ],
+        'public' => true,
+        'show_in_rest' => true,
+        'hierarchical' => false,
+        'rewrite' => ['slug' => 'work-type'],
+    ]);
 }
 add_action('init', 'asap_register_content_types');
+
+/**
+ * Homepage media controls.
+ * The video is uploaded from Appearance > Customize > ASAP Home.
+ */
+function asap_customize_register($wp_customize) {
+    $wp_customize->add_section('asap_home', [
+        'title' => __('ASAP Home', 'asap'),
+        'priority' => 30,
+    ]);
+
+    $wp_customize->add_setting('asap_home_video', [
+        'default' => 0,
+        'sanitize_callback' => 'absint',
+    ]);
+
+    $wp_customize->add_control(new WP_Customize_Media_Control(
+        $wp_customize,
+        'asap_home_video',
+        [
+            'label' => __('Homepage fullscreen video', 'asap'),
+            'section' => 'asap_home',
+            'mime_type' => 'video',
+        ]
+    ));
+}
+add_action('customize_register', 'asap_customize_register');
