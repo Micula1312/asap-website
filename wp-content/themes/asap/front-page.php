@@ -1,26 +1,52 @@
 <?php get_header(); ?>
 
+<?php
+$home_video_id = (int) get_theme_mod('asap_home_video', 0);
+$home_video_url = $home_video_id ? wp_get_attachment_url($home_video_id) : '';
+?>
+
 <main class="home-main">
-    <section class="home-hero shell">
-        <div class="home-hero__copy">
+    <section class="home-video" id="home-video" aria-label="ASAP intro">
+        <?php if ($home_video_url) : ?>
+            <video class="home-video__media" autoplay muted loop playsinline preload="metadata">
+                <source src="<?php echo esc_url($home_video_url); ?>">
+            </video>
+        <?php else : ?>
+            <div class="home-video__fallback" aria-hidden="true">
+                <span class="glow glow--1"></span>
+                <span class="glow glow--2"></span>
+                <span class="glow glow--3"></span>
+            </div>
+        <?php endif; ?>
+
+        <button class="home-video__scroll" type="button" data-scroll-target="#home-head" aria-label="Scroll to ASAP introduction">
+            <span>scroll</span>
+            <span aria-hidden="true">↓</span>
+        </button>
+    </section>
+
+    <section class="home-head shell" id="home-head">
+        <div class="home-head__statement">
             <p class="eyebrow">ASAP APS · Bologna</p>
-            <h1 class="home-title">As Soon As Possible.<br>As Strange As Possible.<br>As Softly As Possible.</h1>
-            <p class="home-intro">
-                ASAP è un collettivo artistico che sviluppa progetti performativi, installativi e partecipativi tra corpo, spazio, ecologia e pratiche multimediali.
-            </p>
+            <h1>As Soon As Possible.<br>As Strange As Possible.<br>As Softly As Possible.</h1>
         </div>
 
-        <div class="home-hero__visual" aria-hidden="true">
-            <span class="glow glow--1"></span>
-            <span class="glow glow--2"></span>
-            <span class="glow glow--3"></span>
+        <div class="home-head__intro">
+            <p>ASAP è un collettivo artistico che sviluppa progetti performativi, installativi e partecipativi tra corpo, spazio, ecologia e pratiche multimediali.</p>
+
+            <nav class="home-head__links" aria-label="Explore ASAP">
+                <a class="pill" href="<?php echo esc_url(home_url('/about')); ?>">About</a>
+                <a class="pill" href="<?php echo esc_url(get_post_type_archive_link('work')); ?>">Works</a>
+                <a class="pill" href="<?php echo esc_url(home_url('/ex-casa-del-custode')); ?>">Ex Casa del Custode</a>
+                <a class="pill" href="<?php echo esc_url(home_url('/radio')); ?>">Radio</a>
+            </nav>
         </div>
     </section>
 
     <section class="home-section shell">
         <div class="section-heading">
             <h2>Selected works</h2>
-            <a class="pill" href="<?php echo esc_url(home_url('/works')); ?>">All works</a>
+            <a class="pill" href="<?php echo esc_url(get_post_type_archive_link('work')); ?>">All works</a>
         </div>
 
         <?php
