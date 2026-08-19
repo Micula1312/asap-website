@@ -27,8 +27,36 @@
   object-fit: cover;
 }
 
+/* Footer becomes part of the fullscreen composition, like the portfolio cover. */
 .home .site-footer {
-  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 8500;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: end;
+  gap: 18px;
+  padding-top: 18px;
+  padding-bottom: clamp(18px, 2vw, 30px);
+  border-top: 0;
+  color: rgba(255,255,255,.56);
+  pointer-events: none;
+}
+
+.home .site-footer > * {
+  pointer-events: auto;
+  text-decoration: none;
+}
+
+.home .site-footer > :nth-child(2),
+.home .site-footer > :nth-child(3) {
+  text-align: center;
+}
+
+.home .site-footer > :last-child {
+  text-align: right;
 }
 
 .home.admin-bar .site-header {
@@ -38,5 +66,19 @@
 @media (max-width: 782px) {
   .home.admin-bar .site-header {
     top: calc(7px + 46px);
+  }
+
+  .home .site-footer {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 8px;
+    font-size: .68rem;
+  }
+
+  .home .site-footer > :nth-child(n) {
+    text-align: left;
+  }
+
+  .home .site-footer > :nth-child(even) {
+    text-align: right;
   }
 }
