@@ -1,0 +1,42 @@
+/* Homepage is intentionally a single fullscreen visual. */
+.home {
+  overflow: hidden;
+}
+
+.home .home-main,
+.home .home-video {
+  width: 100vw;
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.home .home-video {
+  position: relative;
+}
+
+.home .home-video__media,
+.home .home-video__fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.home .home-video__media {
+  object-fit: cover;
+}
+
+.home .site-footer {
+  display: none;
+}
+
+.home.admin-bar .site-header {
+  top: calc(7px + 32px);
+}
+
+@media (max-width: 782px) {
+  .home.admin-bar .site-header {
+    top: calc(7px + 46px);
+  }
+}
