@@ -2,7 +2,7 @@
 /**
  * Plugin Name: ASAP Core
  * Description: Content model for ASAP APS: works, events, members, news, radio and CV entries.
- * Version: 0.1.0
+ * Version: 0.2.0
  * Author: ASAP / Micol Gelsi
  * Text Domain: asap-core
  */
@@ -129,9 +129,11 @@ function asap_core_register_meta() {
         'asap_subtitle' => ['type' => 'string', 'sanitize_callback' => 'sanitize_text_field'],
         'asap_format' => ['type' => 'string', 'sanitize_callback' => 'sanitize_text_field'],
         'asap_duration' => ['type' => 'string', 'sanitize_callback' => 'sanitize_text_field'],
+        'asap_project_url' => ['type' => 'string', 'sanitize_callback' => 'esc_url_raw'],
         'asap_teaser_url' => ['type' => 'string', 'sanitize_callback' => 'esc_url_raw'],
         'asap_credits' => ['type' => 'string', 'sanitize_callback' => 'sanitize_textarea_field'],
         'asap_layout' => ['type' => 'string', 'sanitize_callback' => 'sanitize_key'],
+        'asap_gallery' => ['type' => 'string', 'sanitize_callback' => 'sanitize_text_field'],
     ];
 
     foreach ($work_fields as $key => $args) {
@@ -205,6 +207,99 @@ function asap_core_register_meta() {
     }
 }
 add_action('init', 'asap_core_register_meta');
+
+function asap_core_work_metaboxes() {
+    add_meta_box(
+        'asap_work_details',
+        __('Project details', 'asap-core'),
+        'asap_core_render_work_details',
+        'work',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'asap_core_work_metaboxes');
+
+function asap_core_render_work_details($post) {
+    wp_nonce_field('asap_save_work_details', 'asap_work_details_nonce');
+
+    $year = get_post_meta($post->ID, 'asap_year', true);
+    $url = get_post_meta($post->ID, 'asap_project_url', true);
+    $gallery = get_post_meta($post->ID, 'asap_gallery', true);
+    $gallery_ids = array_filter(array_map('absint', explode(',', (string) $gallery)));
+    ?>
+    <style>
+        .asap-fields{display:grid;grid-template-columns:1fr 1fr;gap:18px}.asap-field{display:flex;flex-direction:column;gap:6px}.asap-field--full{grid-column:1/-1}.asap-gallery-preview{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.asap-gallery-preview img{width:92px;height:92px;object-fit:cover;border:1px solid #ccd0d4}.asap-help{color:#646970;margin:4px 0 0}
+        @media(max-width:782px){.asap-fields{grid-template-columns:1fr}.asap-field--full{grid-column:auto}}
+    </style>
+    <div class="asap-fields">
+        <label class="asap-field">
+            <strong><?php esc_html_e('Year', 'asap-core'); ?></strong>
+            <input type="text" name="asap_year" value="<?php echo esc_attr($year); ?>" placeholder="2026">
+        </label>
+
+        <label class="asap-field">
+            <strong><?php esc_html_e('Project link', 'asap-core'); ?></strong>
+            <input type="url" name="asap_project_url" value="<?php echo esc_attr($url); ?>" placeholder="https://…">
+        </label>
+
+        <div class="asap-field asap-field--full">
+            <strong><?php esc_html_e('Gallery', 'asap-core'); ?></strong>
+            <input type="hidden" id="asap_gallery" name="asap_gallery" value="<?php echo esc_attr($gallery); ?>">
+            <div class="asap-gallery-preview" id="asap-gallery-preview">
+                <?php foreach ($gallery_ids as $attachment_id) : ?>
+                    <?php echo wp_get_attachment_image($attachment_id, 'thumbnail'); ?>
+                <?php endforeach; ?>
+            </div>
+            <div>
+                <button type="button" class="button" id="asap-gallery-select"><?php esc_html_e('Select / edit gallery', 'asap-core'); ?></button>
+                <button type="button" class="button-link-delete" id="asap-gallery-clear" style="margin-left:10px"><?php esc_html_e('Clear gallery', 'asap-core'); ?></button>
+            </div>
+            <p class="asap-help"><?php esc_html_e('The project description uses the main WordPress editor above. Project type is selected from the Work types panel.', 'asap-core'); ?></p>
+        </div>
+    </div>
+    <?php
+}
+
+function asap_core_save_work_details($post_id) {
+    if (!isset($_POST['asap_work_details_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['asap_work_details_nonce'])), 'asap_save_work_details')) {
+        return;
+    }
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    if (isset($_POST['asap_year'])) {
+        update_post_meta($post_id, 'asap_year', sanitize_text_field(wp_unslash($_POST['asap_year'])));
+    }
+    if (isset($_POST['asap_project_url'])) {
+        update_post_meta($post_id, 'asap_project_url', esc_url_raw(wp_unslash($_POST['asap_project_url'])));
+    }
+    if (isset($_POST['asap_gallery'])) {
+        $ids = array_filter(array_map('absint', explode(',', wp_unslash($_POST['asap_gallery']))));
+        update_post_meta($post_id, 'asap_gallery', implode(',', $ids));
+    }
+}
+add_action('save_post_work', 'asap_core_save_work_details');
+
+function asap_core_admin_assets($hook) {
+    global $post_type;
+    if (!in_array($hook, ['post.php', 'post-new.php'], true) || $post_type !== 'work') {
+        return;
+    }
+    wp_enqueue_media();
+    wp_enqueue_script(
+        'asap-core-admin',
+        plugin_dir_url(__FILE__) . 'assets/admin.js',
+        ['jquery'],
+        '0.2.0',
+        true
+    );
+}
+add_action('admin_enqueue_scripts', 'asap_core_admin_assets');
 
 function asap_core_seed_terms() {
     asap_core_register_taxonomies();
