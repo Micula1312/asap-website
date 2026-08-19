@@ -1,40 +1,83 @@
-/* Global utility navigation: Casa + Calendar remain normal page links. Radio floats as a negative badge. */
+/* Shared ASAP interface — common to home, archives, pages and single templates. */
+.site-header {
+  grid-template-columns: auto auto 1fr;
+  column-gap: clamp(18px, 2vw, 34px);
+  align-items: center;
+}
+
+.site-nav--primary { justify-self: start; }
+.site-nav--utility { justify-self: end; }
+
+.menu-list--primary,
+.menu-list--utility {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.menu-list--primary { gap: clamp(14px, 1.5vw, 26px); }
+.menu-list--utility { gap: clamp(7px, .7vw, 12px); }
+
+.menu-link--plain {
+  border: 0 !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  font-size: clamp(.95rem, 1.12vw, 1.2rem) !important;
+  text-transform: lowercase !important;
+}
+
+.menu-link--plain:hover {
+  background: transparent !important;
+  color: inherit !important;
+  opacity: .58;
+}
+
+.menu-link--pill,
 .radio-badge {
-  position: fixed;
-  top: calc(7px + 21px);
-  right: var(--asap-pad);
-  z-index: 9600;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 36px;
-  padding: .34rem 1rem .26rem;
-  border: 1.5px solid #fff;
+  min-height: 32px;
+  padding: .22rem .86rem .16rem;
+  border: 1.5px solid currentColor;
   border-radius: 999px;
-  background: #fff;
-  color: #000;
   font-size: clamp(.72rem, .84vw, .9rem);
   font-weight: 700;
   line-height: 1;
   text-transform: uppercase;
   text-decoration: none;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.08), 0 8px 28px rgba(0,0,0,.18);
-  transition: transform .2s ease, background .2s ease, color .2s ease;
+  white-space: nowrap;
+}
+
+.menu-link--pill {
+  background: transparent;
+  color: inherit;
+}
+
+.menu-link--pill:hover {
+  background: var(--asap-fg);
+  color: var(--asap-bg);
+}
+
+/* Radio is part of the header row, but reads as a separate negative badge. */
+.radio-badge {
+  position: static;
+  margin-left: clamp(8px, 1.2vw, 20px);
+  background: var(--asap-fg);
+  color: var(--asap-bg);
+  border-color: var(--asap-fg);
+  box-shadow: none;
+  transition: transform .2s ease, opacity .2s ease;
 }
 
 .radio-badge:hover {
-  transform: translateY(-2px) rotate(-2deg);
-  background: #000;
-  color: #fff;
+  transform: rotate(-2deg);
+  opacity: .82;
 }
 
-.site-nav--utility {
-  padding-right: clamp(74px, 7.5vw, 118px);
-}
-
-.admin-bar .radio-badge { top: calc(7px + 21px + 32px); }
-
-/* Calendar stays in the standard black ASAP language. */
+/* Calendar stays in the standard ASAP visual language. */
 .calendar-page {
   min-height: 100svh;
   padding-bottom: clamp(70px, 10vw, 140px);
@@ -55,6 +98,65 @@
 .calendar-page__location {
   color: var(--asap-muted);
   text-align: right;
+}
+
+/* Shared page system. */
+.page-shell {
+  min-height: 100svh;
+  padding-top: clamp(125px, 15vh, 180px);
+  padding-bottom: clamp(80px, 10vw, 150px);
+}
+
+.page-head {
+  display: grid;
+  grid-template-columns: minmax(100px, 16vw) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 72px);
+  align-items: start;
+  padding-bottom: clamp(45px, 7vw, 90px);
+}
+
+.page-kicker {
+  color: var(--asap-muted);
+  font-size: clamp(.78rem, .95vw, 1rem);
+  text-transform: lowercase;
+}
+
+.page-title {
+  margin: 0;
+  font-size: clamp(3rem, 6vw, 7rem);
+  line-height: .88;
+  letter-spacing: -.06em;
+  font-weight: 700;
+}
+
+.page-body {
+  display: grid;
+  grid-template-columns: minmax(100px, 16vw) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 72px);
+}
+
+.page-body__content {
+  grid-column: 2;
+  width: min(100%, 980px);
+  font-size: clamp(1rem, 1.35vw, 1.35rem);
+  line-height: 1.35;
+}
+
+.page-body__content > *:first-child { margin-top: 0; }
+.page-body__content img { max-width: 100%; height: auto; }
+
+/* Works archive: intentionally editorial, not poster-sized. */
+.archive-head {
+  padding-top: clamp(125px, 15vh, 180px);
+  padding-bottom: clamp(35px, 5vw, 65px);
+}
+
+.archive-head__title {
+  margin: 0;
+  font-size: clamp(3.2rem, 6.2vw, 7.2rem);
+  line-height: .86;
+  letter-spacing: -.06em;
+  text-transform: none;
 }
 
 /* The visual system changes on Radio, not on Calendar. */
@@ -106,9 +208,7 @@ body.single-radio .radio-badge {
   align-items: end;
 }
 
-.radio-page__head .eyebrow {
-  grid-column: 1 / -1;
-}
+.radio-page__head .eyebrow { grid-column: 1 / -1; }
 
 .radio-page__intro {
   margin: 0 0 .35rem;
@@ -146,13 +246,28 @@ body.single-radio .radio-badge {
 }
 
 @media (max-width: 900px) {
-  .site-nav--utility { padding-right: 0; }
-  .radio-badge {
-    top: auto;
-    right: var(--asap-pad);
-    bottom: clamp(18px, 4vw, 30px);
+  .site-header {
+    grid-template-columns: auto 1fr;
+    row-gap: 10px;
   }
-  .admin-bar .radio-badge { top: auto; }
+
+  .site-nav--primary { justify-self: end; }
+  .site-nav--utility {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+  }
+
+  .menu-list--utility {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .radio-badge { margin-left: 8px; }
+
+  .page-head,
+  .page-body { grid-template-columns: 1fr; }
+  .page-body__content { grid-column: 1; }
+
   .calendar-page__row { grid-template-columns: 1fr auto; }
   .calendar-page__row > :first-child,
   .calendar-page__location { grid-column: 1 / -1; text-align: left; }
